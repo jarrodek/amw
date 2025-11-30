@@ -1,6 +1,6 @@
 {
   "name": "@jarrodek/amw",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A library to mock API calls in a web browser using service workers",
   "license": "Apache-2.0",
   "author": "Pawel Uchida-Psztyc",

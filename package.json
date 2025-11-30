@@ -1,0 +1,102 @@
+{
+  "name": "@jarrodek/amw",
+  "version": "0.1.0",
+  "description": "A library to mock API calls in a web browser using service workers",
+  "license": "Apache-2.0",
+  "author": "Pawel Uchida-Psztyc",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./sw": {
+      "types": "./dist/sw.d.ts",
+      "import": "./dist/sw.js"
+    },
+    "./worker": {
+      "types": "./dist/worker.d.ts",
+      "import": "./dist/worker.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "npm run build:ts && npm run build:sw",
+    "build:ts": "tsc",
+    "build:sw": "node scripts/build-sw.js",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build",
+    "prepare": "husky",
+    "test": "npm run build && wtr",
+    "test:watch": "npm run build && wtr --watch",
+    "test:chrome": "npm run build && wtr --playwright --browsers chromium",
+    "test:firefox": "npm run build && wtr --playwright --browsers firefox",
+    "test:webkit": "npm run build && wtr --playwright --browsers webkit",
+    "test:all": "npm run build && wtr --playwright --browsers chromium firefox webkit",
+    "lint:eslint": "eslint --color --cache --cache-location .eslintcache .",
+    "lint:prettier": "prettier \"**/*.ts\" --check",
+    "format:eslint": "eslint --color --cache --fix --cache-location .eslintcache .",
+    "format:prettier": "prettier \"**/*.ts\" --write",
+    "format": "npm run format:eslint && npm run format:prettier",
+    "release": "node scripts/release.js",
+    "release:patch": "node scripts/release.js patch",
+    "release:minor": "node scripts/release.js minor",
+    "release:major": "node scripts/release.js major"
+  },
+  "keywords": [
+    "mock",
+    "api",
+    "service-worker",
+    "testing",
+    "fetch",
+    "interceptor",
+    "network"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@eslint/compat": "^2.0.0",
+    "@eslint/js": "^9.39.1",
+    "@esm-bundle/chai": "^4.3.4",
+    "@pawel-up/semver": "^0.1.4",
+    "@types/chai-as-promised": "^8.0.2",
+    "@types/mocha": "^10.0.10",
+    "@web/dev-server-esbuild": "^1.0.2",
+    "@web/test-runner": "^0.18.0",
+    "@web/test-runner-playwright": "^0.11.0",
+    "chai-as-promised": "^8.0.2",
+    "conventional-changelog-cli": "^5.0.0",
+    "esbuild": "^0.19.0",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-no-only-tests": "^3.3.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.7.3",
+    "typescript": "^5.3.0",
+    "typescript-eslint": "^8.48.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix"
+    ],
+    "*.ts": [
+      "eslint --fix"
+    ]
+  }
+}

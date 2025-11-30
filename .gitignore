@@ -44,5 +44,4 @@ Thumbs.db
 .cache/
 
 # Linting
-.husky
 .eslintcache

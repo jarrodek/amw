@@ -38,6 +38,12 @@ export default {
   testsFinishTimeout: 60000,
   browserStartTimeout: 30000,
 
+  testFramework: {
+    config: {
+      timeout: 10000,
+    },
+  },
+
   // Coverage
   coverage: true,
   coverageConfig: {

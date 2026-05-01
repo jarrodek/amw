@@ -40,6 +40,10 @@ export class MockHandlerImpl implements MockHandler {
     this.executePort.onmessage = this.handleExecuteMessage.bind(this)
   }
 
+  async isRunning(): Promise<boolean> {
+    return !this.stopped
+  }
+
   /**
    * Handles execution requests from Service Worker.
    */

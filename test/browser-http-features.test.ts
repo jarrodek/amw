@@ -7,14 +7,19 @@ import { setupWorker, type MockHandler } from '../dist/index.js'
 describe('Browser-Specific HTTP Features', () => {
   let mock: MockHandler
 
-  beforeEach(async () => {
+  before(async () => {
     mock = await setupWorker({ swPath: '/dist/sw.js', base: 'https://api.example.com' })
   })
 
-  afterEach(async () => {
+  after(async () => {
     if (mock) {
+      await mock.reset()
       await mock.stop()
     }
+  })
+
+  beforeEach(async () => {
+    await mock.reset()
   })
 
   describe('HTTP Redirects', () => {

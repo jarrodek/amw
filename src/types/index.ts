@@ -28,6 +28,11 @@ export interface MockHandler {
    * Unregisters SW and cleans up.
    */
   stop(): Promise<void>
+
+  /**
+   * Check if the worker is running.
+   */
+  isRunning(): Promise<boolean>
 }
 
 /**

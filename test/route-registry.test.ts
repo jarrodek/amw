@@ -13,6 +13,7 @@ function makeRequest(overrides: Partial<SerializedRequest> = {}): SerializedRequ
     headers: { 'content-type': 'application/json' },
     body: null,
     params: { id: '123' },
+    query: {},
     ...overrides,
   }
 }

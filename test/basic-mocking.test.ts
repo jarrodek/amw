@@ -9,18 +9,22 @@ import type { MockHandler } from '../src/index.js'
 describe('Basic Mocking', () => {
   let mock: MockHandler
 
-  beforeEach(async () => {
+  before(async () => {
     mock = await setupWorker({
       swPath: '/dist/sw.js',
       base: 'https://api.example.com',
     })
   })
 
-  afterEach(async () => {
+  after(async () => {
     if (mock) {
       await mock.reset()
       await mock.stop()
     }
+  })
+
+  beforeEach(async () => {
+    await mock.reset()
   })
 
   it('should mock a simple GET request', async () => {

@@ -5,22 +5,22 @@ import { expect } from '@esm-bundle/chai'
 import { setupWorker } from '../dist/index.js'
 import type { MockHandler } from '../src/index.js'
 
-function delay(ms: number) {
-  return new Promise((r) => setTimeout(r, ms))
-}
-
 describe('Core Behavior', () => {
   let mock: MockHandler
 
-  beforeEach(async () => {
+  before(async () => {
     mock = await setupWorker({ swPath: '/dist/sw.js', base: 'https://api.example.com' })
   })
 
-  afterEach(async () => {
+  after(async () => {
     if (mock) {
+      await mock.reset()
       await mock.stop()
-      await delay(20) // small gap to let SW settle
     }
+  })
+
+  beforeEach(async () => {
+    await mock.reset()
   })
 
   it('newer overlapping pattern should take precedence (LIFO)', async () => {

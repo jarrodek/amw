@@ -7,14 +7,19 @@ import { setupWorker, type MockHandler } from '../dist/index.js'
 describe('Real-World Integration Patterns', () => {
   let mock: MockHandler
 
-  beforeEach(async () => {
+  before(async () => {
     mock = await setupWorker({ swPath: '/dist/sw.js', base: 'https://api.example.com' })
   })
 
-  afterEach(async () => {
-    if (mock) {
-      await mock.stop()
+  after(async () => {
+    await mock.stop()
+  })
+
+  beforeEach(async () => {
+    if (!(await mock.isRunning())) {
+      mock = await setupWorker({ swPath: '/dist/sw.js', base: 'https://api.example.com' })
     }
+    await mock.reset()
   })
 
   describe('Authentication Flows', () => {

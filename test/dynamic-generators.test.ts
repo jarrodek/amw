@@ -8,14 +8,19 @@ import type { MockHandler } from '../src/index.js'
 describe('Dynamic Response Generators', () => {
   let mock: MockHandler
 
-  beforeEach(async () => {
+  before(async () => {
     mock = await setupWorker({ swPath: '/dist/sw.js', base: 'https://api.example.com' })
   })
 
-  afterEach(async () => {
+  after(async () => {
     if (mock) {
+      await mock.reset()
       await mock.stop()
     }
+  })
+
+  beforeEach(async () => {
+    await mock.reset()
   })
 
   it('generator can access request URL params', async () => {

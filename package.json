@@ -2,6 +2,13 @@
   "name": "@jarrodek/amw",
   "version": "0.2.1",
   "description": "A library to mock API calls in a web browser using service workers",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jarrodek/amw.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jarrodek/amw/issues"
+  },
   "license": "Apache-2.0",
   "author": "Pawel Uchida-Psztyc",
   "type": "module",

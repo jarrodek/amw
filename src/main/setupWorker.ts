@@ -22,14 +22,18 @@ export async function setupWorker(options?: SetupWorkerOptions): Promise<MockHan
   try {
     registration = await navigator.serviceWorker.register(swPath, { scope })
   } catch (error) {
-    throw new Error(`Failed to register Service Worker: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    throw new Error(`Failed to register Service Worker: ${error instanceof Error ? error.message : 'Unknown error'}`, {
+      cause: error,
+    })
   }
 
   // Wait for the Service Worker to be ready
   try {
     await withTimeout(navigator.serviceWorker.ready, SW_READY_TIMEOUT, 'Service Worker activation timeout')
   } catch (error) {
-    throw new Error(`Service Worker not ready: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    throw new Error(`Service Worker not ready: ${error instanceof Error ? error.message : 'Unknown error'}`, {
+      cause: error,
+    })
   }
 
   // Get the active Service Worker

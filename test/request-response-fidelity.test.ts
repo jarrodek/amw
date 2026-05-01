@@ -57,6 +57,22 @@ describe('Request/Response Fidelity', () => {
   })
 
   describe('Query Parameters', () => {
+    it('should extract query parameters into req.query', async () => {
+      await mock.add({
+        match: { uri: '/query-test' },
+        respond: {
+          body: (req) => JSON.stringify(req.query),
+        },
+      })
+
+      const res = await fetch('https://api.example.com/query-test?single=value&multiple=one&multiple=two')
+      const query = await res.json()
+      expect(query).to.deep.equal({
+        single: 'value',
+        multiple: ['one', 'two'],
+      })
+    })
+
     it('should ignore query parameters when matching routes', async () => {
       await mock.add({
         match: { uri: '/users/:id' },

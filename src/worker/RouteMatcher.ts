@@ -47,9 +47,25 @@ export class RouteMatcher {
       Object.assign(params, patternMatch.pathname.groups)
     }
 
-    // Extract search groups if any
-    if (patternMatch.search.groups) {
-      Object.assign(params, patternMatch.search.groups)
+    return params
+  }
+
+  /**
+   * Extracts query parameters from a URLPattern match.
+   */
+  static extractQueryParameters(patternMatch: URLPatternResult): Record<string, string | string[]> {
+    const params: Record<string, string | string[]> = {}
+
+    if (patternMatch.search.input) {
+      try {
+        const searchParams = new URLSearchParams(patternMatch.search.input)
+        for (const key of searchParams.keys()) {
+          const value = searchParams.getAll(key)
+          params[key] = value.length === 1 ? value[0] : value
+        }
+      } catch {
+        // ignore
+      }
     }
 
     return params
@@ -62,6 +78,7 @@ export class RouteMatcher {
     const headers = headersToObject(request.headers)
     const body = await readRequestBody(request.clone())
     const params = this.extractParams(patternMatch)
+    const query = this.extractQueryParameters(patternMatch)
 
     return {
       url: request.url,
@@ -69,6 +86,7 @@ export class RouteMatcher {
       headers,
       body,
       params,
+      query,
     }
   }
 }

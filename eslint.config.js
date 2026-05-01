@@ -25,7 +25,8 @@ export const GLOBAL_IGNORE_LIST = [
   'CHANGELOG.md',
   'LICENSE*',
   'coverage/**',
-  'package-lock.json'
+  'package-lock.json',
+  'examples/'
 ]
 
 /** @type {import('eslint').Linter.Config[]} */

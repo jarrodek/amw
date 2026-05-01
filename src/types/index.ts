@@ -126,6 +126,9 @@ export interface SerializedRequest {
 
   /** Route parameters extracted from URLPattern */
   params: Record<string, string>
+
+  /** Route query parameters extracted from URL search */
+  query: Record<string, string | string[]>
 }
 
 /**
